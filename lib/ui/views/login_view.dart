@@ -55,9 +55,7 @@ class LoginView extends StatelessWidget {
                                 ),
                                 height: 36.0,
                               ),
-                              onPressed: (){
-                                model.signUpWithGoogle();
-                              }, key: const Key('SignInWIthGoogle'),
+                              onPressed: model.signUpWithGoogle, key: const Key('SignInWIthGoogle'),
                             ),
                             verticalSpaceSmall,
                             LoginButtonBuilder(
@@ -74,7 +72,7 @@ class LoginView extends StatelessWidget {
                               onPressed: ()=>{},
                             ),
                             verticalSpaceSmall,
-                            MaterialButton(onPressed: model.signUpWithFacebook,child: Text('hello'),),
+
                             LoginButtonBuilder(
                               key: const Key('SingInWIthFacebook'),
                               width:MediaQuery.of(context).size.width*0.8,
@@ -86,9 +84,7 @@ class LoginView extends StatelessWidget {
                                 ),
                                 height: 36.0,
                               ),
-                              onPressed:()=>{
-                                print("test")
-                              },
+                              onPressed:model.signUpWithFacebook,
                             ),
 
 

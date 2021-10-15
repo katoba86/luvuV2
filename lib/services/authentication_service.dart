@@ -73,27 +73,37 @@ class AuthenticationService {
 
 
   Future loginWithGoogle() async{
+    final GoogleSignIn googleSignIn = GoogleSignIn();
+    final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
 
-    final GoogleSignInAccount? googleSignInAccount = await _googleSignIn.signIn();
-    final GoogleSignInAuthentication googleSignInAuthentication = await googleSignInAccount!.authentication;
+    if (googleUser != null) {
 
 
-    final AuthCredential credential = GoogleAuthProvider.credential(idToken: googleSignInAuthentication.idToken, accessToken: googleSignInAuthentication.accessToken);
-    final UserCredential authResult = await _firebaseAuth.signInWithCredential(credential);
-    final User? user = authResult.user;
 
-    await _populateCurrentUser(user!);
-    await _apiService.createUser(currentUser!);
 
-    return user!=null;
+      final GoogleSignInAuthentication googleAuth =
+      await googleUser.authentication;
+
+      String? token = googleAuth.idToken;
+      if(token == null){return false;}
+      _currentUser = base.User(name: googleUser.displayName!,id: googleUser.id,token: token,email: googleUser.email);
+      if(_currentUser!=null) {
+        await _apiService.createUser(currentUser!);
+      }
+    }else{
+      print("Aborted");
+    }
+
+
   }
 
 
 
-
   _populateCurrentUser(User user) async{
-    IdTokenResult token = (await user.getIdToken()) as IdTokenResult;
-    _currentUser = base.User(name: user.displayName!,id: user.uid,token: token.token,email: user.email!);
+    if(user != null){
+      IdTokenResult token = await user.getIdTokenResult();
+      _currentUser = new base.User(name: user.displayName!,id: user.uid,token: token.token,email: user.email!);
+    }
   }
 
   void logOut() async{

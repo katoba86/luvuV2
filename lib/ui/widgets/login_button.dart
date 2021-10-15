@@ -28,7 +28,7 @@ class LoginButtonBuilder extends StatelessWidget {
   final Color? textColor, iconColor, backgroundColor, splashColor;
 
   /// onPressed should be specified as a required field to indicate the callback.
-  final Function onPressed;
+  final VoidCallback? onPressed;
 
   /// padding is default to `EdgeInsets.all(3.0)`
   final EdgeInsets? padding, innerPadding;
@@ -83,7 +83,7 @@ class LoginButtonBuilder extends StatelessWidget {
       elevation: elevation,
       padding: padding ?? EdgeInsets.all(0),
       color: backgroundColor ?? Color(0xFFFFFFFF),
-      onPressed: ()=>onPressed,
+      onPressed: onPressed,
       splashColor: splashColor,
       child: _getButtonChild(context),
       shape: shape ?? ButtonTheme.of(context).shape,
