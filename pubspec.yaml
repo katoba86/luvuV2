@@ -45,6 +45,7 @@ dependencies:
   retrofit: ^2.0.1
   stacked: ^2.2.7
   firebase_core: ^1.7.0
+  provider: ^5.0.0
 
 dev_dependencies:
   build_runner:

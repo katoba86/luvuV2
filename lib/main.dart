@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'language/i18n.dart';
 import 'managers/dialog_manager.dart';
 import 'locator.dart';
@@ -29,29 +30,15 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
 
     SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
+      DeviceOrientation.portraitUp
     ]);
 
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      localizationsDelegates: [
-        const I18nDelegate(),
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-      ],
-      supportedLocales: I18nDelegate.supportedLocals,
-      title: 'Luvu',
-      builder: (context, child){
-        return Navigator(
-          key: locator<DialogService>().dialogNavigationKey,
-          onGenerateRoute: (settings) => MaterialPageRoute(
-              builder: (context) => DialogManager(child: child!)),
-        );},
-      navigatorKey: locator<NavigationService>().navigationKey,
-      theme: LuvuTheme.defaultTheme,
-      home: StartupView(),
-      onGenerateRoute: generateRoute,
+    return StreamProvider<User>.value(
+      value:AuthService().user,
+      initialData: null,
+      child:MaterialApp(
+        home:Wrapper()
+      )
     );
   }
 }
