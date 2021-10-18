@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import '../constants/route_names.dart';
 import 'views/login_view.dart';
+import 'views/home_view.dart';
 
 
 
@@ -15,7 +16,11 @@ Route<dynamic> generateRoute(RouteSettings settings) {
         viewToShow: LoginView(),
       );
 
-
+    case HomeViewRoute:
+      return _getPageRoute(
+        routeName: settings.name!,
+        viewToShow: HomeView(),
+      );
 
 
 

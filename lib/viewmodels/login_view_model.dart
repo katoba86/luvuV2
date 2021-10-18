@@ -1,3 +1,5 @@
+import 'package:luvu_v2/constants/route_names.dart';
+
 import '../locator.dart';
 import '../services/authentication_service.dart';
 import '../services/navigation_service.dart';
@@ -26,7 +28,7 @@ class LoginViewModel extends BaseModel {
     if (result is bool) {
       if (result) {
         // @todo here we go
-       // _navigationService.navigateTo(HomeViewRoute);
+        _navigationService.navigateTo(HomeViewRoute);
       } else {
         await _dialogService.showDialog(
           title: 'Sign Up Failure',

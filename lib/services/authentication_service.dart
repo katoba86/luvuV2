@@ -20,6 +20,10 @@ class AuthenticationService {
   base.User? _currentUser;
   base.User? get currentUser => _currentUser;
 
+
+  User? _fbUser;
+  User? get fbUser => _fbUser;
+
   Future<bool> isUserLoggedIn() async{
     var user = _firebaseAuth.currentUser;
     if(user == null){return false;}
@@ -78,7 +82,7 @@ class AuthenticationService {
 
     if (googleUser != null) {
 
-
+      this._fbUser = googleUser;
 
 
       final GoogleSignInAuthentication googleAuth =
