@@ -53,7 +53,7 @@ class LoginViewModel extends BaseModel {
     if (result is bool) {
       if (result) {
         //here we go
-        //_navigationService.navigateTo(HomeViewRoute);
+        _navigationService.navigateTo(HomeViewRoute);
       } else {
         await _dialogService.showDialog(
           title: 'Sign Up Failure',
@@ -63,7 +63,7 @@ class LoginViewModel extends BaseModel {
     } else {
       await _dialogService.showDialog(
         title: 'Sign Up Failure',
-        description: result,
+        description: 'Something went wrong',
       );
     }
   }

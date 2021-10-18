@@ -11,6 +11,7 @@ import 'navigation_service.dart';
 class AuthenticationService {
 
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+
   final GoogleSignIn _googleSignIn = GoogleSignIn();
   //final FacebookSignIn _facebookSignIn = FacebookSignIn();
 
@@ -76,29 +77,28 @@ class AuthenticationService {
   }
 
 
-  Future loginWithGoogle() async{
+  Future<bool> loginWithGoogle() async{
     final GoogleSignIn googleSignIn = GoogleSignIn();
     final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
 
     if (googleUser != null) {
 
-      this._fbUser = googleUser;
-
-
       final GoogleSignInAuthentication googleAuth =
       await googleUser.authentication;
 
-      String? token = googleAuth.idToken;
-      if(token == null){return false;}
-      _currentUser = base.User(name: googleUser.displayName!,id: googleUser.id,token: token,email: googleUser.email);
-      if(_currentUser!=null) {
-        await _apiService.createUser(currentUser!);
-      }
+      AuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken
+      );
+      _firebaseAuth.signInWithCredential(credential);
+      _fbUser = _firebaseAuth.currentUser;
+      return true;
     }else{
       print("Aborted");
+
     }
 
-
+    return false;
   }
 
 

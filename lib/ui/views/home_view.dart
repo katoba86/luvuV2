@@ -16,6 +16,8 @@ class HomeView extends StatelessWidget {
                     painter: DefaultPaint(),
                     child: Stack(
                         children: <Widget>[
+
+                          Text(model.currentUser!.email)
                         ]
                     )
                 )
